@@ -35,7 +35,7 @@ Why were these data types selected?
 
 ### Answer
 
-_Write your explanation here._
+country.Population is an integer storing whole numbers representing the number of people while country.LifeExpectancy stores numerical values to the first decimal place. Both are numerical values but the decimal allows for more precise analysis.
 
 ### Screenshot
 
