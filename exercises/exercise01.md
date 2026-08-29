@@ -1,6 +1,6 @@
 # Exercise 01: World Database SQL Practice
 
-- Name:
+- Name:Taylor Martin
 - Course: Database for Analytics
 - Module: 1
 - Database Used: World Database
@@ -56,7 +56,7 @@ Why do you think this data type was selected?
 
 ### Answer
 
-_Write your explanation here._
+country.IndepYear is a small integer whole number because it only needs to store a 4 digit year
 
 ### Screenshot
 
@@ -75,8 +75,7 @@ Explain why your proposed data type might be better in some situations.
 
 ### Answer
 
-_Write your explanation here._
-
+country.IndepYear data could be stored as YEAR to better describe what information is being stored in the column and could prevent invalid entries from being added like a potential negative value or anything over 4 digits.
 ---
 
 ## Question 4
