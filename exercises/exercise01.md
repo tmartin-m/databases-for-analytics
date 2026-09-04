@@ -76,7 +76,7 @@ Explain why your proposed data type might be better in some situations.
 ### Answer
 
 country.IndepYear data could be stored as YEAR to better describe what information is being stored in the column and could prevent invalid entries from being added like a potential negative value or anything over 4 digits.
----
+
 
 ## Question 4
 
