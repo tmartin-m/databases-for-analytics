@@ -1,8 +1,8 @@
 # Exercise 05: SQLDA Database - Dates, Data Quality, Arrays, and JSON
 
-- Name:
+- Name: Taylor Martin
 - Course: Database for Analytics
-- Module:
+- Module: 5 - Using Complex Data Types
 - Database Used: `sqlda` (Sample Datasets)
 - Tools Used: PostgreSQL (pgAdmin or psql)
 
@@ -43,7 +43,9 @@ year
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT DISTINCT EXTRACT(Year FROM sent_date) as year
+FROM emails
+ORDER BY year;
 ```
 
 ### Screenshot
@@ -68,7 +70,10 @@ count   year
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT COUNT(*) as count, EXTRACT(YEAR FROM sent_date) as year
+FROM emails
+GROUP BY year
+ORDER BY year;
 ```
 
 ### Screenshot
@@ -90,7 +95,9 @@ Only include emails that contain **both** a sent date and an opened date.
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT sent_date, opened_date, opened_date - sent_date AS interval
+FROM emails
+WHERE sent_date IS NOT NULL AND opened_date IS NOT NULL;
 ```
 
 ### Screenshot
@@ -108,7 +115,9 @@ show emails that contain an **opened date BEFORE the sent date**.
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT email_id, sent_date, opened_date
+FROM emails
+WHERE opened_date < sent_date;
 ```
 
 ### Screenshot
@@ -127,7 +136,7 @@ After looking at the data, **why is this the case?**
 
 ### Answer
 
-_Write your explanation here._
+The sent_date and opened_date  are timestamps without time zones so the emails could be being sent in one timezone and being opened in another time zone that is hours behind the time zone they were sent from.
 
 ### Screenshot (if requested by instructor)
 
@@ -168,7 +177,7 @@ CREATE TEMP TABLE customer_dealership_distance AS (
 
 ### Answer
 
-_Write your explanation here._
+The sql is creating 3 tempoary tables customer_points, dealership_points and customer_dealership_distance. The customer_points table combines customers longitutde and latitude into a "point" as long as both are not missing data. The dealership_points table is turning the dealerships location into a "point." The dealership_points table does not specify excluding any dealerships with missing location data. The customer_dealership_distance table joins the points created in the first 2 tables and calculates the distance between them.
 
 ---
 
@@ -188,7 +197,10 @@ For example - dealership 1 is below:
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT dealership_id, ARRAY_AGG(last_name || ',' || first_name) AS salespeople
+FROM salespeople
+GROUP BY dealership_id
+ORDER BY dealership_id;
 ```
 
 ### Screenshot
@@ -214,7 +226,15 @@ Reference image:
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT
+	dealerships.dealership_id,
+	dealerships.state,
+	COUNT(salespeople.salesperson_id),
+	ARRAY_AGG(salespeople.last_name || ',' || salespeople.first_name)
+FROM dealerships
+JOIN salespeople ON dealerships.dealership_id = salespeople.dealership_id
+GROUP BY dealerships.dealership_id, dealerships.state
+ORDER BY dealerships.state;
 ```
 
 ### Screenshot
@@ -231,7 +251,8 @@ the **customers** table to **JSON**.
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT row_to_json(c)
+FROM customers c;
 ```
 
 ### Screenshot
@@ -258,7 +279,18 @@ Reference image:
 ### SQL
 
 ```sql
--- Your SQL here
+SELECT row_to_json(c)
+FROM(
+SELECT
+  dealerships.dealership_id,
+  dealerships.state,
+  COUNT(salespeople.salesperson_id) AS num_salespeople,
+  ARRAY_AGG(salespeople.last_name || ',' || salespeople.first_name)
+FROM dealerships
+JOIN salespeople ON dealerships.dealership_id = salespeople.dealership_id
+GROUP BY dealerships.dealership_id, dealerships.state
+ORDER BY dealerships.state
+) AS c;
 ```
 
 ### Screenshot
