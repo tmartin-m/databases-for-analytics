@@ -2,7 +2,7 @@
 
 From the Operational Model to the Dimensional Model
 
-- Name:
+- Name: Taylor Martin
 - Course: Database for Analytics
 - Module: 6
 
@@ -111,7 +111,7 @@ Save your diagram image in this repo and embed it below.
 
 #### Diagram
 
-![Star Schema Diagram](star-schema.png)
+![Star Schema Diagram](star-schema.jpg)
 
 ---
 
@@ -125,4 +125,18 @@ In 1-2 short paragraphs, explain:
 
 #### Design Notes
 
-_Write your design notes here._
+My schema includes 3 dimension tables. The first is Date which includes the primary key of Date as an integer. The table also includes the full date, and the date broken out into Day, Month, Quarter and Year. This is needed to be able to answer some of the questions that either asked about sales on specific years, quarters, months or a combination of more than 1 of the data points.
+
+The second is Parts which includes the primary key of Part as an integer. The table also includes the Part Number, Part Description and Category. I debated if Part Description was necessary to answer the questions because Part Number and Category contained enough information but I believe Part Description could add benefit for "How many appliance items were sold during the third quarter of 1994?"
+
+The third and final dimension table is Customers which includes the primary key of Customer as an integer. The table also includes the Customer Number, Customer Address and the address broken into individual data points including Street, City, State and Zipcode. Customer credit limits and balances were not needed to be able to answer the questions.
+
+The fact table grain is daily sales because the requirements stated we do not want unnecessary data in the warehouse and "specific data about orders and orderline information is not needed." Each row is the total quanity sold and total revenue made for a part purchased by a customer on a specific day.
+
+This designs supports the analytics questions but specifically the following data points could be used to generate answers:
+- Revenue from zip code 64468 customers in Sept 1994?
+  - Using the Amount from the fact table and the connections with the foreign/primary keys to the Date and Customers for the date and zipcode data points.
+- Appliance items sold in Q3 1994?
+  - Using the Quantity from the fact table and the connections with the foreign/primary keys to the Date and Parts tables for the date and category data points.
+- How many ax12 did Customer 124 buy last year?
+  - Using the Quantity from the fact table and the connections with the foreign/primary keys to the Date, Customer and Parts tables for the date, customer number and part number data points.
