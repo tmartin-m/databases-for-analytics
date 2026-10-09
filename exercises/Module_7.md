@@ -25,8 +25,7 @@ The chinook dataset is located here: https://github.com/lerocha/chinook-database
 
 ## Installing Your Data
 
-As mentioned above the chinook database wasn't my original choice. I first chose the pagila database and when I tried to install it received this error: "ERROR: extension "vector" is not available HINT: The extension must first be installed on the system where PostgreSQL is running SQL state: 0A000." After researching the error there were two possibilites either remove or commenting out the commands regarding VECTOR or installing the extension. From what I read the extension installation was not recommended for a school project so I attempted commenting out. I attempted and tried installing several times but kept running into the same error. That was when I elected to try installing chinook instead.
- .....
+As mentioned above the chinook database wasn't my original choice. I first chose the pagila database and when I tried to install it received this error: "ERROR: extension "vector" is not available HINT: The extension must first be installed on the system where PostgreSQL is running SQL state: 0A000." After researching the error there were two possibilites either remove or commenting out the commands regarding VECTOR or installing the extension. From what I read the extension installation was not recommended for a school project so I attempted commenting out. I attempted and tried installing several times but kept running into the same error. That was when I elected to try installing chinook instead, and ran into only one some issue trying to install and was able to correct by removing the command to create the database from the code since I already created it in pgAdmin.
 
 ## Verifying Your Data
 
@@ -62,19 +61,23 @@ The invoice_line table consists of 5 columns: invoice_line_id as an integer, inv
 
 The media_type table consists of 2 columns: media_type_id as an integer and name as character varying text. The table consists of 5 rows. Media_type is the foreign key connecting to the Track table.
 
-![Select Media Type](screenshots/media_type.png)
+![Select Media Type](screenshots/select_media_type.png)
 
 The playlist table consists of 2 columns: playlist_id as an integer and name as character varying text. The table consists of 18 rows. Playlist_id is the foreign key that connects to the Playlist Track Table.
 
-![Select Playlist](screenshots/playlist.png)
+![Select Playlist](screenshots/select_playlist.png)
 
 The playlist_track table consists of 2 columns: playlist_id as an integer and track_id as an integer. The table consists of 8715 rows. Both columns are primary keys connecting to other tables. Playlist_id connects to the playlist table and track_id connects to the track table.
 
-![Select Playlist Track](screenshots/playlist_track.png)
+![Select Playlist Track](screenshots/select_playlist_track.png)
 
 The track table consists of 9 columns: track_id as an integer, name as character varying text, album_id as an integer, media_type_id as an integer, genre_id as an integer, composer as character varying text, milliseconds as an integer, bytes as an integer and unit_price as a numeric. THe table consists of 3503 rows. Track_id is a foreign key connecting to the Playlist Track table; while Album_id, Media_type and genre_id are primary keys connecting to the album, Media Type and Genre tables respectively.
 
-![Select Track](screenshots/track.png)
+![Select Track](screenshots/select_track.png)
+
+![Data Dictionary](screenshots/data_dictionary.png)
+
+![Relationship Table](screenshots/relationship_table.png)
 
 ### Table Structure
 ![Table Structure](screenshots/table_structure.png)
@@ -141,6 +144,12 @@ ORDER BY songs_sold DESC;
 ![Songs Sold Query](screenshots/songs_sold.png)
 
 Query's purpose to show the artists that generate the most sales.
+
+## Insights
+
+From the queries I was able to see that a small number of customers generated a large portion of the sales, as well as some artists like Iron Maiden or Metallica outsold others. We could also used the joined data to determine a purchasing trend among the customers.
+
+Relational databases make data connections possible across tables and the the aggregate functions produce actionable business insights from raw data.
 
 ## Next Steps
 
